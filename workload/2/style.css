@@ -4,7 +4,7 @@ p {
   
   h1 {
     color: maroon;
-    }
+  }
   
   .title {
     color: teal;
@@ -13,12 +13,14 @@ p {
   .uppercase {
     text-transform: uppercase;
   }
-  
   .publish-time {
     color: gray;
   }
   
-  #article-title {
-   font-family: cursive;
-  text-transform: capitalize;
+  .cursive {
+    font-family: cursive;
+  }
+  
+  .capitalize {
+    text-transform: capitalize;
   }
