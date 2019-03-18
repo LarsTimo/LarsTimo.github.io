@@ -11,8 +11,8 @@ p {
   }
   
   h5 {
-    color: rebeccapurple;
-    }
+    color: rebeccapurple !important;
+  }
   
   .title {
     color: teal;
@@ -35,4 +35,4 @@ p {
   
   .description h5 {
     color: teal;
-   }
+  }
