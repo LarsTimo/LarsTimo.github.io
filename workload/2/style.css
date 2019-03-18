@@ -14,6 +14,12 @@ p {
     color: rebeccapurple !important;
   }
   
+  p,
+  h5 {
+    font-family: Georgia;
+  }
+  
+  
   .title {
     color: teal;
   }
