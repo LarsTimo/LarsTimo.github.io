@@ -14,7 +14,8 @@ body {
     font-size: 2em;
     padding-top: 100px;
     width: 100%;
-    font-family: Georgia
+    font-family: Georgia;
+    text-align: center;
   }
   
   h2 {
