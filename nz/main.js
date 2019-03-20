@@ -19,3 +19,12 @@ karte.setView(
 );
 //openstreetmap einbauen
 L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
+
+//Positionsmarker
+
+let pin= L.marker(
+    [breite,laenge]
+).addTo(karte);
+
+//popup zum pin hängen
+pin.bindPopup(titel).openPopup();
