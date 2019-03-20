@@ -1,7 +1,7 @@
 body {
     max-width: 1280px;
     margin: auto;
-    font-family: "Open Sans";
+    font-family: "Open Sans", sans-serif;
 }
 header {
     text-align: center;
@@ -82,4 +82,12 @@ main figure img {
 
 footer {
     padding: 1em 0 5em 0;
+}
+
+@media only screen and (max-width: 1200px){
+    main figure figcaption {
+        float: none;
+        margin-left: 0;
+        width: auto;
+    }
 }
