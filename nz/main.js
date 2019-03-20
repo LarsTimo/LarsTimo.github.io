@@ -1,8 +1,13 @@
 //alert("Hallo Welt!");
 
 const div= document.getElementById("map");
-const lat = div.getAttribute("data-lat")
-const long = div.getAttribute("data-long")
-const title = div.getAttribute("data-title")
+const breite = div.getAttribute("data-lat")
+const laenge = div.getAttribute("data-long")
+const titel = div.getAttribute("data-title")
 
-console.log(lat,long,title)
+// console.log("breite=",breite,"länge=",laenge,"titel=",titel,)
+
+//Karte initialisieren
+
+let karte = L.map("map");
+//console.log(karte);
