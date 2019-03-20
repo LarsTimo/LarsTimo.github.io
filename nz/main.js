@@ -17,3 +17,5 @@ karte.setView(
     [breite,laenge],
     13
 );
+//openstreetmap einbauen
+L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(karte);
