@@ -2,6 +2,7 @@ body {
     max-width: 1280px;
     margin: auto;
     font-family: "Open Sans", sans-serif;
+    font-size: 1.2em;
 }
 header {
     text-align: center;
