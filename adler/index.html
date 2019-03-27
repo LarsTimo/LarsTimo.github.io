@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kalser Tauernhaus - Stüdlhütte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|ZCOOL+XiaoWei" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto|ZCOOL+XiaoWei" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+        integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
     <script defer src="main.js"></script>
 </head>
-    
+
 <body>
     <header>
         <h3>Der Adlerweg</h3>
@@ -21,68 +23,90 @@
     </header>
 
     <div class="author">
-        <img src="images/user.jpg" alt="Auge" >
-      
+        <img src="images/user.jpg" alt="Auge">
+
         <address>
             <div id="user_address">
-             <a href="mailto:lars.stetter@gmail.com">Lars Stetter</a> <br>                 
-              <a href="https://github.com/LarsTimo/LarsTimo.github.io">Github </a>
+                <a href="mailto:lars.stetter@gmail.com">Lars Stetter</a> <br>
+                <a href="https://github.com/LarsTimo/LarsTimo.github.io">Github </a>
             </div>
         </address>
-    </div>  
-      <hr />
+    </div>
+    <hr />
 
     <main>
-        <h1> Der Weg zum zum Fuße des Großglockners</h1>
+        <h1> Der Weg zum Fuße des Großglockners</h1>
 
-        <p>Die gewaltige Berglandschaft spitzt sich zu: Zollspitze, Säulspitze, Bretterspitze, Kristallspitze, Kreuzwandspitze… Sie alle grüßen mit ihren markanten Gipfeln die Adlerwegwanderer auf dieser Etappe. Der Weg führt jedoch vom Kalser Tauernhaus über sanfte Böden durch das liebliche Tal der Dorferalmen: Schönebenalm, Bergeralm, Moaebenalm und Moaalm sind geprägt durch idyllische Landschaft und intakte Landwirtschaft, urige Hütten offerieren gemütliche Einkehrmöglichkeiten. Danach erfolgt der Anstieg in Richtung Teischnitztal, der Herrensteig führt an Figerhorn, Freiwandspitze und Fanotkogel vorbei zur Stüdlhütte am Fuß des Großglockners.<br>(Quelle: <a href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette" >tirol.at</a>)</p>
-        
+        <p>Die gewaltige Berglandschaft spitzt sich zu: Zollspitze, Säulspitze, Bretterspitze, Kristallspitze,
+            Kreuzwandspitze… Sie alle grüßen mit ihren markanten Gipfeln die Adlerwegwanderer auf dieser Etappe. Der Weg
+            führt jedoch vom Kalser Tauernhaus über sanfte Böden durch das liebliche Tal der Dorferalmen: Schönebenalm,
+            Bergeralm, Moaebenalm und Moaalm sind geprägt durch idyllische Landschaft und intakte Landwirtschaft, urige
+            Hütten offerieren gemütliche Einkehrmöglichkeiten. Danach erfolgt der Anstieg in Richtung Teischnitztal, der
+            Herrensteig führt an Figerhorn, Freiwandspitze und Fanotkogel vorbei zur Stüdlhütte am Fuß des
+            Großglockners.<br>(Quelle: <a
+                href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette">tirol.at</a>)
+        </p>
+
         <figure>
-            <figcaption><i class="fas fa-camera-retro"></i> <em>Das Etappenziel: Die Stüdlhütte auf 2801m</em>  </figcaption>    
-            <img src="images/attraction.jpg" alt="Stüdlhütte" > 
+            <figcaption><i class="fas fa-camera-retro"></i> <em>Das Etappenziel: Die Stüdlhütte auf 2801m</em>
+            </figcaption>
+            <img src="images/attraction.jpg" alt="Stüdlhütte">
 
         </figure>
 
         <figure>
-            <figcaption><i class="fas fa-camera-retro"></i> <em>Der Großglockner: König der Tauern</em>  </figcaption>    
-            <img src="images/attraction2.jpg" alt="Großglockner" > 
+            <figcaption><i class="fas fa-camera-retro"></i> <em>Der Großglockner: König der Tauern</em> </figcaption>
+            <img src="images/attraction2.jpg" alt="Großglockner">
 
         </figure>
         <h2> Von Brettern und Klammen </h2>
-             
-               
-            
-            <p><b>Adlerblick</b> · Auf den Höhenwegen zwischen Matrei und Kals trifft man öfters auf Felsen und Berge, die das Wort „Brett“ in ihrem Namen haben, z. B. Bretterwandspitze. So auch auf dieser Etappe mit Bretterspitze und Bretterwand. Das ist kein Zufall, denn alle diese Felswände haben eine Gemeinsamkeit: Der steil aufgestellte Glimmerschiefer erinnert an glatte Bretter. <br /> <br />
 
-                <b>Adlerkick</b> · Ein Wegstück auf dieser Etappe verläuft oberhalb der wildromantischen Dabaklamm mit ihren tosenden Wassern. Ein beeindruckendes Schauspiel der Naturgewalten, aber Trittsicherheit ist Voraussetzung bei einigen sehr steilen und abschüssigen Stellen, besonders bei Nässe ist Vorsicht geboten.<br>(Quelle: <a href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette" >tirol.at</a>)</p>
 
-        
+
+        <p><b>Adlerblick</b> · Auf den Höhenwegen zwischen Matrei und Kals trifft man öfters auf Felsen und Berge, die
+            das Wort „Brett“ in ihrem Namen haben, z. B. Bretterwandspitze. So auch auf dieser Etappe mit Bretterspitze
+            und Bretterwand. Das ist kein Zufall, denn alle diese Felswände haben eine Gemeinsamkeit: Der steil
+            aufgestellte Glimmerschiefer erinnert an glatte Bretter. <br /> <br />
+
+            <b>Adlerkick</b> · Ein Wegstück auf dieser Etappe verläuft oberhalb der wildromantischen Dabaklamm mit ihren
+            tosenden Wassern. Ein beeindruckendes Schauspiel der Naturgewalten, aber Trittsicherheit ist Voraussetzung
+            bei einigen sehr steilen und abschüssigen Stellen, besonders bei Nässe ist Vorsicht geboten.<br>(Quelle: <a
+                href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette">tirol.at</a>)
+        </p>
+
+
 
 
         <h3>Übersichtskarte</h3>
-        <div id="map" data-lat1="47.070703" data-long1="12.623844" data-title1="Kalser Tauernhaus" data-lat2="47.054829" data-long2="12.681088" data-title2="Stüdhlütte"></div>
-        
-        
+        <div id="map" data-lat1="47.070703" data-long1="12.623844" data-title1="Kalser Tauernhaus" data-lat2="47.054829"
+            data-long2="12.681088" data-title2="Stüdhlütte"></div>
+
+
 
         <h3>Links</h3>
         <p>Weiterführende Informationen zum Adlerweg:</p>
         <ul>
-            <li> <a href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/3?form=hiketours&theme%5B0%5D=1">Übersicht über die Etappen</a></li>
-            <li> <a href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette">Etappe 08 </a></li>
-           
+            <li> <a href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/3?form=hiketours&theme%5B0%5D=1">Übersicht
+                    über die Etappen</a></li>
+            <li> <a
+                    href="https://www.tirol.at/reisefuehrer/sport/wandern/wandertouren/a-adlerweg-etappe-o8-kalser-tauernhaus-stuedlhuette">Etappe
+                    08 </a></li>
+
         </ul>
-      
+
     </main>
 
     <hr />
 
     <footer>
         <nav>
-            <a class="back" href="https://robinkohrs.github.io/adler/index.html"><i class="fas fa-arrow-circle-left"></i> vorherige Etappe</a>
-            <a class="next" href="https://veitba.github.io/adler/index.html">nächste Etappe <i class="fas fa-arrow-alt-circle-right"></i> </a>
+            <a class="back" href="https://robinkohrs.github.io/adler/index.html"><i
+                    class="fas fa-arrow-circle-left"></i> vorherige Etappe</a>
+            <a class="next" href="https://veitba.github.io/adler/index.html">nächste Etappe <i
+                    class="fas fa-arrow-alt-circle-right"></i> </a>
 
         </nav>
-        
+
     </footer>
 
 </body>
