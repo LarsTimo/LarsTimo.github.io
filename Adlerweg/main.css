@@ -28,9 +28,10 @@ header h4{
 
 header h2{
     font-size: 1.5em;
-    color: white;
+    color:white;
     margin: 0;
     padding: 175px 0 0 0;
+    text-shadow: 0 0 5px black;
 }
 
 .author {

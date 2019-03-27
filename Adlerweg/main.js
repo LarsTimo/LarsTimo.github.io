@@ -10,12 +10,11 @@ const breite2 = div.getAttribute("data-lat2")
 const laenge2 = div.getAttribute("data-long2")
 const titel2 = div.getAttribute("data-title2")
 
-console.log(breite1)
 
 //Karte initialisieren
 
 let karte = L.map("map");
-//console.log(karte);
+
 
 //auf ausschnitt zoomen
 karte.setView(
