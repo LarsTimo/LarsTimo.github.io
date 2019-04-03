@@ -13,6 +13,7 @@ const titel2 = div.getAttribute("data-title2")
 //Karte initialisieren
 let karte = L.map("map");
 
+//Fügt kartenlayer von verschiedenen Quellen hinzu
 const kartenLayer ={
     osm: L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
     subdomains : ["a","b","c"],

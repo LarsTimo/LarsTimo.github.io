@@ -1,9 +1,10 @@
 .leaflet-control-coordinates {
-	background: white;
+	background: rgba(255, 182, 47, 0.397);
 	border-radius: 4px;
 	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 	cursor: pointer;
 	padding: 2px 5px;
+	font-family: "Dokdo"
 }
 
 .leaflet-control-coordinates.hidden {
