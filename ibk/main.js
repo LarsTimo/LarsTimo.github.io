@@ -1,10 +1,6 @@
 //alert("Hallo Welt!");
 
 const div = document.getElementById("map");
-const breite1 = div.getAttribute("data-lat1")
-const laenge1 = div.getAttribute("data-long1")
-const titel1 = div.getAttribute("data-title1")
-
 
 
 //Karte initialisieren
@@ -77,55 +73,30 @@ L.control.layers({
 }).addTo(karte);
 
 
-/*//setzt Kartenausschnitt 
+//setzt Kartenausschnitt 
 karte.setView(
-    [breite1,laenge1],
+    [47.2672222, 11.392778],
     13
 );
-*/
-
-//setzt karte auf aktuelle Geolocation
-karte.locate({
-    setView: true,
-    maxZoom: 16,
-    watch: true,
-});
 
 //setzt festen Positionsmarker
-let positionsMarker = L.marker ([47,11]).addTo(karte);
+let positionsMarker = L.marker ([47.2672222, 11.392778]).addTo(karte);
 
-//Erneuert den Positionsmarker mit den Koordinaten der Geolocation  und setzt Kreis um Marker mit Genauigkeit
-karte.on("locationfound", function(event){
-    console.log(event);
-    //L.marker([event.latlng]).addTo(karte);
-    positionsMarker.setLatLng(event.latlng);
+//console.log(SPORTSTAETTEN)
 
-    L.circle([
-        event.latitude, event.longitude], 
-        {radius: event.accuracy/2
-        }).addTo(karte);
-})
+for (let staette of SPORTSTAETTEN){
+    console.log(staette);
+    staettepin = L.marker(
+        [staette.lat, staette.lng]
+    ).addTo(karte) 
 
-karte.on("locationerror", function(event){
-    alert("leider keinen Standort gefunden")
-});
-
-
-
-//Plugin (Leaflet.fullscreen) CDN: erzeugt Fullscreen Button
-karte.addControl(new L.Control.Fullscreen());
+   staettepin.bindPopup(
+        `<p><b> ${staette.anlage}</b><p>
+        <p>Adresse: ${staette.adresse}<p>
+        <p>Typ:${staette.typ} <p>
+        <p>Gruppe:${staette.gruppe} <p>`
+    );
+}
 
 
-//Plugin (Leaflet Coordinates Control) css und js: zeigt Koordinatne bei Mausklick an
-var coords = new L.Control.Coordinates();
-coords.addTo(karte);
-karte.on('click', function(e) {
-	coords.setCoordinates(e);
-});
-
-
-/*
-//Plugin (leaflet-hash) CDN:Fügt Koordinaten zu HTML Link hinzu
-var hash = new L.Hash(karte);
-*/
 
