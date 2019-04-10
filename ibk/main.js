@@ -85,8 +85,7 @@ let positionsMarker = L.marker ([47.2672222, 11.392778]).addTo(karte);
 //console.log(SPORTSTAETTEN)
 
 for (let staette of SPORTSTAETTEN){
-    console.log(staette);
-    staettepin = L.marker(
+       staettepin = L.marker(
         [staette.lat, staette.lng]
     ).addTo(karte) 
 
