@@ -87,21 +87,28 @@ karte.setView(
 //setzt karte auf aktuelle Geolocation
 karte.locate({
     setView: true,
-    maxZoom: 16
+    maxZoom: 16,
+    watch: true,
 });
 
-//setzt Popup an der Stelle, wo die geolocation ist und setzt Kreis um Marker mit Genauigkei
+//setzt festen Positionsmarker
+let positionsMarker = L.marker ([47,11]).addTo(karte);
+
+//Erneuert den Positionsmarker mit den Koordinaten der Geolocation  und setzt Kreis um Marker mit Genauigkeit
 karte.on("locationfound", function(event){
     console.log(event);
-    L.marker([
-        event.latitude, event.longitude
-        ]).addTo(karte);
+    //L.marker([event.latlng]).addTo(karte);
+    positionsMarker.setLatLng(event.latlng);
 
     L.circle([
         event.latitude, event.longitude], 
         {radius: event.accuracy/2
         }).addTo(karte);
 })
+
+karte.on("locationerror", function(event){
+    alert("leider keinen Standort gefunden")
+});
 
 
 
@@ -117,6 +124,8 @@ karte.on('click', function(e) {
 });
 
 
+/*
 //Plugin (leaflet-hash) CDN:Fügt Koordinaten zu HTML Link hinzu
 var hash = new L.Hash(karte);
+*/
 
