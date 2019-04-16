@@ -1,7 +1,5 @@
-//alert("Hallo Welt!");
 
 const div = document.getElementById("map");
-
 
 //Karte initialisieren
 let karte = L.map("map");
@@ -82,11 +80,16 @@ karte.setView(
 //setzt festen Positionsmarker
 let positionsMarker = L.marker ([47.2672222, 11.392778]).addTo(karte);
 
-//console.log(SPORTSTAETTEN)
-
+//Für jede Statte des Sportstaetten Arrays
 for (let staette of SPORTSTAETTEN){
-       staettepin = L.marker(
-        [staette.lat, staette.lng]
+    let piktogramm = L.icon({
+        iconUrl : `icons/icon_${staette.icon}_schwarz_auf_weiss_250px.png`,
+        iconSize : 40,
+    });
+    staettepin = L.marker(
+        [staette.lat, staette.lng], {
+            icon:piktogramm
+        }
     ).addTo(karte) 
 
    staettepin.bindPopup(
