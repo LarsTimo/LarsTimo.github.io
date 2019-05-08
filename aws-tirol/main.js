@@ -103,7 +103,7 @@ async function loadStations() {
             <footer> Land Tirol - <a href="https://data.tirol.gv.at">data.tirol.gv.at</a></footer>`;
         })
         .addTo(awsTirol)
-    awsTirol.addTo(karte);
+    //awsTirol.addTo(karte);
     karte.fitBounds(awsTirol.getBounds());
     layerControl.addOverlay(awsTirol, "Wetterstationen Tirol");
 
@@ -130,6 +130,41 @@ async function loadStations() {
         }
     }).addTo(windLayer);
     layerControl.addOverlay (windLayer, "Windrichtung")
+
+       //Schneehöhe
+       const snowLayer = L.featureGroup();
+       const farbPalette= [
+            [50, "red"],
+            [100, "white"]
+       ]
+       L.geoJson(stations, {
+           pointToLayer: function (feature, latlng) {
+               if (feature.properties.HS) {
+                   if (feature.properties.HS >= 0) {
+                    let color = "blue";
+                       for (let i=0; i<farbPalette.length; i++){
+                           console.log(farbPalette[i])
+                           
+                           if (feature.properties.HS < farbPalette[i][0]){
+                               color = farbPalette [i][1];
+                               break;
+                           }
+                        }
+                        
+                       
+                            
+                        return L.marker(latlng, {
+                            icon: L.divIcon({
+                                html: `<div class="schneeLabel" style= "background-color: ${color}"> ${feature.properties.HS}</div>`  
+                            })
+        
+                        });
+                    }
+               }
+           }
+       }).addTo(snowLayer);
+       layerControl.addOverlay (snowLayer, "Schneehöhe")
+       snowLayer.addTo(karte)
 
 
     
