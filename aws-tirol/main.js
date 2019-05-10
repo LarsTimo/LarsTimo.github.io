@@ -219,6 +219,52 @@ async function loadStations() {
     }).addTo(feuchteLayer);
     layerControl.addOverlay(feuchteLayer, "Relative Feuchte");
 
+    // Windgeschwindigkeit
+    const windgeschLayer = L.featureGroup();
+    const windgeschPalette = [
+        [12.96, "#05B603"], 
+        [20.37, "#14CA26"], 
+        [29.63, "#76D675"], 
+        [40.74, "#FED7D4"], 
+        [51.86, "#FEB7B1"], 
+        [62.97, "#FEA098"], 
+        [75.93, "#FB817D"],
+        [88.90,"#FF6361"],  
+        [103.71,"#FF5D61"], 
+        [118.53,"#FD463A"], 
+        [999,"#FF200D"], 
+    ];
+
+    L.geoJson(stations, {
+        pointToLayer: function (feature, latlng) {
+            if (feature.properties.WG) {
+                // Farbe des letzten Eintrags der Farbpalette als Standardfarbe setzen 
+                let color = windgeschPalette[windgeschPalette.length - 1][1];
+
+                // jeden Feuchtewert mit den Schwellen der Farbpalette vergleichen
+                for (let i = 0; i < windgeschPalette.length; i++) {
+                    //console.log(feuchtePalette[i],feature.properties.RH);
+                    if (feature.properties.RH < windgeschPalette[i][0]) {
+                        // der Feuchtewert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                        color = windgeschPalette[i][1];
+
+                        // Überprüfung beenden, weil die Farbe bereits ermittelt ist
+                        break;
+                    } else {
+                        // weiter zum nächsten Schwellenwert
+                    }
+                }
+                // Marker mit Feuchtewert und Hintergrundfarbe zurückgeben
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        html: `<div class="windgeschLabel" style="background-color:${color}">${feature.properties.WG}</div>`
+                    })
+                });
+            }
+        }
+    }).addTo(windgeschLayer);
+    layerControl.addOverlay(windgeschLayer, "Windgeschwindigkeit");
+
 
 
 
