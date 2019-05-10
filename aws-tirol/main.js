@@ -223,17 +223,28 @@ async function loadStations() {
 
 
 
-//Schneehöhe
+//Schneehöhe (eigner Farbverlauf)
 const snowLayer = L.featureGroup();
 const farbPalette = [
-    [50, "#EEE"],
-    [100, "#EEE"]
+    [10, "#EEF5F7"],
+    [20, "#DDEBEF"],
+    [30, "#DDEBEF"],
+    [50, "#BBD8DE"],
+    [75, "#AACED6"],
+    [100, "#99C4CE"],
+    [150, "#88BAC6"],
+    [200, "#77B0BD"],
+    [250, "#66A6B5"],
+    [300, "#559CAD"],
+    [400, "#4492A5"],
+    [9999, "#006B84"],
+
 ]
 L.geoJson(stations, {
     pointToLayer: function (feature, latlng) {
         if (feature.properties.HS) {
             if (feature.properties.HS >= 0) {
-                let color = "#EEE";
+                let color = "#FFFFFF";
                 for (let i = 0; i < farbPalette.length; i++) {
                     
                     if (feature.properties.HS < farbPalette[i][0]) {
