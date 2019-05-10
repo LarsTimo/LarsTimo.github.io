@@ -109,16 +109,37 @@ async function loadStations() {
 
     //Windrichtung anzeigen
     const windLayer = L.featureGroup();
+    //Windgeschwindigkeit als Farbe für Pfeile definieren. Farpalette wird später auch bei der Windgeschwindigkeit in Zahlen verwendet
+    const windgeschPalette = [
+        [3.60, "#05B603"], //<3
+        [8.23, "#0ECE24"], //3-4
+        [11.32, "#73D36F"], //4-5
+        [14.40, "#FBD8D3"], //6
+        [17.49, "#FFB4B3"], //7
+        [21.09, "#FF9F9D"],//8
+        [24.69,"#FF8281"],  //9
+        [28.81,"#FE5F61"], //10
+        [32.96,"#FE4341"], //11
+        [999,"#FF1F0E"], //>11
+    ];
     
     L.geoJson(stations, {
         pointToLayer: function (feature, latlng) {
             if (feature.properties.WR) {
-                let color = "black";
-                if (feature.properties.WG > 10) {
-                    color = "orange"
-                }
-                if (feature.properties.WG > 20) {
-                    color = "red"
+                let color = windgeschPalette[windgeschPalette.length - 1][1];
+
+                // jeden Geschwindigkeitswert mit den Schwellen der Farbpalette vergleichen
+                for (let i = 0; i < windgeschPalette.length; i++) {
+                    
+                    if (feature.properties.WG < windgeschPalette[i][0]) {
+                        // der Geschwindigkeitswert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                        color = windgeschPalette[i][1];
+
+                        // Überprüfung beenden, weil die Farbe bereits ermittelt ist
+                        break;
+                    } else {
+                        // weiter zum nächsten Schwellenwert
+                    }
                 }
                 return L.marker(latlng, {
                     icon: L.divIcon({
@@ -135,12 +156,14 @@ async function loadStations() {
     // Temperaturlayer hinzufügen
     const temperaturLayer = L.featureGroup();
     const temperaturPalette = [
-        [-10, "#00008B"], // Farbe für Temperatur unter -10°
-        [-5, "#4169E1"], // Farbe für Temperatur >= -10° und < -5°
-        [0, "#87CEFA"], // Farbe für Temperatur >= -5° und < 0°
-        [5, "#FF7F50"], // Farbe für Temperatur >= 0° und < 5°
-        [10, "#FF4500"], // Farbe für Temperatur >= 5° und < 10°
-        [99, "darkred"], // Farbe für Temperaturen > 10°
+        [-20, "#6B655F"],//<-20
+        [-10, "#732E75"],//-20 bis -10
+        [0, "#3701DA"], //-10 bis 0
+        [10, "#007800"], //0 bis 10
+        [20, "#FCFE05"], //10 bis 20
+        [30, "#F77700"], //20 bis 30
+        [40, "#F20205"], //30 bis 40        
+        [99, "730405"], //>40
     ];
 
     L.geoJson(stations, {
@@ -221,31 +244,18 @@ async function loadStations() {
 
     // Windgeschwindigkeit
     const windgeschLayer = L.featureGroup();
-    const windgeschPalette = [
-        [12.96, "#05B603"], 
-        [20.37, "#14CA26"], 
-        [29.63, "#76D675"], 
-        [40.74, "#FED7D4"], 
-        [51.86, "#FEB7B1"], 
-        [62.97, "#FEA098"], 
-        [75.93, "#FB817D"],
-        [88.90,"#FF6361"],  
-        [103.71,"#FF5D61"], 
-        [118.53,"#FD463A"], 
-        [999,"#FF200D"], 
-    ];
-
+    
     L.geoJson(stations, {
         pointToLayer: function (feature, latlng) {
             if (feature.properties.WG) {
                 // Farbe des letzten Eintrags der Farbpalette als Standardfarbe setzen 
                 let color = windgeschPalette[windgeschPalette.length - 1][1];
 
-                // jeden Feuchtewert mit den Schwellen der Farbpalette vergleichen
+                // jeden Geschwindigkeitswert mit den Schwellen der Farbpalette vergleichen
                 for (let i = 0; i < windgeschPalette.length; i++) {
-                    //console.log(feuchtePalette[i],feature.properties.RH);
-                    if (feature.properties.RH < windgeschPalette[i][0]) {
-                        // der Feuchtewert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                    
+                    if (feature.properties.WG < windgeschPalette[i][0]) {
+                        // der Geschwindigkeitswert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
                         color = windgeschPalette[i][1];
 
                         // Überprüfung beenden, weil die Farbe bereits ermittelt ist
@@ -254,7 +264,7 @@ async function loadStations() {
                         // weiter zum nächsten Schwellenwert
                     }
                 }
-                // Marker mit Feuchtewert und Hintergrundfarbe zurückgeben
+                // Marker mit Geschwindigkeitswwert und Hintergrundfarbe zurückgeben
                 return L.marker(latlng, {
                     icon: L.divIcon({
                         html: `<div class="windgeschLabel" style="background-color:${color}">${feature.properties.WG}</div>`
