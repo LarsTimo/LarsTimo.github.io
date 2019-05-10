@@ -109,19 +109,20 @@ async function loadStations() {
 
     //Windrichtung anzeigen
     const windLayer = L.featureGroup();
+    
     L.geoJson(stations, {
         pointToLayer: function (feature, latlng) {
             if (feature.properties.WR) {
                 let color = "black";
-                if (feature.properties.WG >20){
-                color = "orange"
+                if (feature.properties.WG > 10) {
+                    color = "orange"
                 }
-                if (feature.properties.WG >30){
+                if (feature.properties.WG > 20) {
                     color = "red"
-                    }
+                }
                 return L.marker(latlng, {
                     icon: L.divIcon({
-                        html: `<i style= "color: ${color}; transform:rotate(${feature.properties.WR}deg)" class="fas fa-arrow-up fa-4x"></i>`   
+                        html: `<i style= "color: ${color}; transform:rotate(${feature.properties.WR}deg)" class="fas fa-arrow-up fa-4x"></i>`
                     })
 
                 });
@@ -129,45 +130,134 @@ async function loadStations() {
             }
         }
     }).addTo(windLayer);
-    layerControl.addOverlay (windLayer, "Windrichtung")
+    layerControl.addOverlay(windLayer, "Windrichtung")
 
-       //Schneehöhe
-       const snowLayer = L.featureGroup();
-       const farbPalette= [
-            [50, "red"],
-            [100, "white"]
-       ]
-       L.geoJson(stations, {
-           pointToLayer: function (feature, latlng) {
-               if (feature.properties.HS) {
-                   if (feature.properties.HS >= 0) {
-                    let color = "blue";
-                       for (let i=0; i<farbPalette.length; i++){
-                           console.log(farbPalette[i])
-                           
-                           if (feature.properties.HS < farbPalette[i][0]){
-                               color = farbPalette [i][1];
-                               break;
-                           }
-                        }
-                        
-                       
-                            
-                        return L.marker(latlng, {
-                            icon: L.divIcon({
-                                html: `<div class="schneeLabel" style= "background-color: ${color}"> ${feature.properties.HS}</div>`  
-                            })
-        
-                        });
+    // Temperaturlayer hinzufügen
+    const temperaturLayer = L.featureGroup();
+    const temperaturPalette = [
+        [-10, "#00008B"], // Farbe für Temperatur unter -10°
+        [-5, "#4169E1"], // Farbe für Temperatur >= -10° und < -5°
+        [0, "#87CEFA"], // Farbe für Temperatur >= -5° und < 0°
+        [5, "#FF7F50"], // Farbe für Temperatur >= 0° und < 5°
+        [10, "#FF4500"], // Farbe für Temperatur >= 5° und < 10°
+        [99, "darkred"], // Farbe für Temperaturen > 10°
+    ];
+
+    L.geoJson(stations, {
+        pointToLayer: function (feature, latlng) {
+            if (feature.properties.LT) {
+                // Farbe des letzten Eintrags der Farbpalette als Standardfarbe setzen 
+                let color = temperaturPalette[temperaturPalette.length - 1][1];
+
+                // jeden Temperaturwert mit den Schwellen der Farbpalette vergleichen
+                for (let i = 0; i < temperaturPalette.length; i++) {
+                    //console.log(farbPalette[i],feature.properties.LT);
+                    if (feature.properties.LT < temperaturPalette[i][0]) {
+                        // der Temperaturwert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                        color = temperaturPalette[i][1];
+
+                        // Überprüfung beenden, weil die Farbe bereits ermittelt ist
+                        break;
+                    } else {
+                        // weiter zum nächsten Schwellenwert
                     }
-               }
-           }
-       }).addTo(snowLayer);
-       layerControl.addOverlay (snowLayer, "Schneehöhe")
-       snowLayer.addTo(karte)
-
+                }
+                // Marker mit Temperaturwert und Hintergrundfarbe zurückgeben
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        html: `<div class="temperaturLabel" style="background-color:${color}">${feature.properties.LT}</div>`
+                    })
+                });
+            }
+        }
+    }).addTo(temperaturLayer);
+    layerControl.addOverlay(temperaturLayer, "Temperatur");
+    temperaturLayer.addTo(karte);
 
     
-    
+
+    // Relative Feuchte
+    const feuchteLayer = L.featureGroup();
+    const feuchtePalette = [
+        [30, "#F0EEF2"], 
+        [40, "#DBDEDB"], 
+        [50, "#C4C9C8"], 
+        [60, "#BCBDBE"], 
+        [70, "#ABA9D1"], 
+        [80, "#9D95DE"], 
+        [90, "#8B85EC"],
+        [999,"#7677E4"],  
+    ];
+
+    L.geoJson(stations, {
+        pointToLayer: function (feature, latlng) {
+            if (feature.properties.RH) {
+                // Farbe des letzten Eintrags der Farbpalette als Standardfarbe setzen 
+                let color = feuchtePalette[feuchtePalette.length - 1][1];
+
+                // jeden Feuchtewert mit den Schwellen der Farbpalette vergleichen
+                for (let i = 0; i < feuchtePalette.length; i++) {
+                    //console.log(feuchtePalette[i],feature.properties.RH);
+                    if (feature.properties.RH < feuchtePalette[i][0]) {
+                        // der Feuchtewert ist kleiner als die Schwelle -> die entsprechende Farbe zuweisen
+                        color = feuchtePalette[i][1];
+
+                        // Überprüfung beenden, weil die Farbe bereits ermittelt ist
+                        break;
+                    } else {
+                        // weiter zum nächsten Schwellenwert
+                    }
+                }
+                // Marker mit Feuchtewert und Hintergrundfarbe zurückgeben
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        html: `<div class="feuchteLabel" style="background-color:${color}">${feature.properties.RH}</div>`
+                    })
+                });
+            }
+        }
+    }).addTo(feuchteLayer);
+    layerControl.addOverlay(feuchteLayer, "Relative Feuchte");
+
+
+
+
+
+//Schneehöhe
+const snowLayer = L.featureGroup();
+const farbPalette = [
+    [50, "#EEE"],
+    [100, "#EEE"]
+]
+L.geoJson(stations, {
+    pointToLayer: function (feature, latlng) {
+        if (feature.properties.HS) {
+            if (feature.properties.HS >= 0) {
+                let color = "#EEE";
+                for (let i = 0; i < farbPalette.length; i++) {
+                    
+                    if (feature.properties.HS < farbPalette[i][0]) {
+                        color = farbPalette[i][1];
+                        break;
+                    }
+                }
+
+
+
+                return L.marker(latlng, {
+                    icon: L.divIcon({
+                        html: `<div class="schneeLabel" style= "background-color: ${color}"> ${feature.properties.HS}</div>`
+                    })
+
+                });
+            }
+        }
+    }
+}).addTo(snowLayer);
+layerControl.addOverlay(snowLayer, "Schneehöhe")
 }
+
+
+
+
 loadStations();
