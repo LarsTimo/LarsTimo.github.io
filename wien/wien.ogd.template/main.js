@@ -65,8 +65,103 @@ const layerControl = L.control.layers({
 
 kartenLayer.bmapgrau.addTo(karte);
 
+//Plugin fügt Fullscrenn Funktion hinzu
 karte.addControl(new L.Control.Fullscreen());
 
 karte.setView([48.208333, 16.373056], 12);
 
 // die Implementierung der Karte startet hier
+
+//Url für GeoJson Daten der Sehenswürdigkeiten (data.gv.at)
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SPAZIERPUNKTOGD&srsName=EPSG:4326&outputFormat=json"
+
+//erzeugt Marker (Bild und Größe)
+function makeMarker(feautre, latlng) {
+    const bildIcon= L.icon({
+                iconUrl: "http://www.data.wien.gv.at/icons/sehenswuerdigogd.svg",
+                iconSize: [36, 36],
+    });
+    // Positioniert Marker und lädt zuvor erzeugten Marker(Bild und Größe)
+    const marker = L.marker(latlng, {
+            icon:bildIcon
+    });
+    //definiert en PopUp des Markers
+    marker.bindPopup(`
+        <h3>${feautre.properties.NAME}</h3>
+        <p>${feautre.properties.BEMERKUNG}</p>
+        <footer><a target="blank" href="${feautre.properties.WEITERE_INF}">Weblink</a></footer>
+
+    `);
+    return marker;
+    }
+
+
+async function loadSights(url) {
+    const sightsClusterGruppe = L.markerClusterGroup();
+    const response = await fetch(url);
+    const sightsData = await response.json();
+    const geoJson = L.geoJson(sightsData, {
+        pointToLayer: makeMarker
+        
+    });
+    //Plugin: Leaflet.markercluster. Clusterd Pins 
+    sightsClusterGruppe.addLayer(geoJson)
+    karte.addLayer(sightsClusterGruppe);
+    //Fügt Auswahl hinzu ob Layeer angezeigt werden soll
+    layerControl.addOverlay(sightsClusterGruppe, "Sehenswürdigkeiten");
+
+    //Plugin: Leaflet Control Search.Fügt Suchfeld hinzu. Dabei wird GeoJson durchsucht
+    const suchFeld = new L.Control.Search({
+        layer: sightsClusterGruppe,
+        propertyName: "NAME",
+        zoom: 17,
+        initial: false
+    });
+    
+    suchFeld.addTo(karte)  //Alternativ: karte.addControl(suchFeld)
+    
+    
+}
+loadSights(url);
+
+//Fügt Maßstab hinzu
+const scale= L.control.scale({
+    imperial: false,
+    metric: true
+    });
+scale.addTo(karte);
+
+
+
+
+
+//Url für GeoJson Daten der Spazierwege (data.gv.at)
+const wege = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SPAZIERLINIEOGD&srsName=EPSG:4326&outputFormat=json"
+
+//erstellt Popup für Linien
+function linienPopup(feature, layer){
+    const popup =`
+        <h3>${feature.properties.NAME}</h3>
+        `;
+        layer.bindPopup(popup)
+
+}
+
+async function loadWege (wege) {
+    const antwort = await fetch(wege);
+    const wegeData = await antwort.json();
+    const wegeJson = L.geoJson(wegeData, {
+        style: function () {
+            return {
+                color: "green"
+            };
+        },
+        //öffnet oben erstelltes Linien-Popup
+        onEachFeature: linienPopup
+    });
+
+        karte.addLayer(wegeJson);
+        layerControl.addOverlay(wegeJson, "Spazierwege")
+
+}
+loadWege(wege);
