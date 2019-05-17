@@ -87,7 +87,7 @@ function makeMarker(feautre, latlng) {
     //definiert en PopUp des Markers
     marker.bindPopup(`
         <h3>${feautre.properties.NAME}</h3>
-        <p>"Adresse" href=${feautre.properties.ADRESSE}</p>
+        <b> Adresse:</b> ${feautre.properties.ADRESSE}
     `);
     return marker;
 }
