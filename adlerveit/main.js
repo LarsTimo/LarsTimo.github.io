@@ -147,6 +147,18 @@ new L.GPX("AdlerwegEtappeO9.gpx", {
     }
 }).on('loaded', function (e) {
     karte.fitBounds(e.target.getBounds());
+    const statsDiv= document.getElementById("stats");
+    const verticalMeters= Math.round(e.target.get_elevation_gain());
+    const minHeight =Math.round(e.target.get_elevation_min());
+    const maxHeight= Math.round(e.target.get_elevation_max());
+    const routeName= e.target.get_name();
+    
+    statsDiv.innerHTML= `Routen Statistik  "${routeName}":<br> niedrigster Punkt: ${minHeight}m <br>
+    höchster Punkt: ${maxHeight}m<br>
+    Höhenmeter: ${verticalMeters}m`;
+    
+
+
 }).on('addline', function (e) { //Höhenprofil hinzufügen
     console.log('linie geladen');
     const controlElevation = L.control.elevation({
